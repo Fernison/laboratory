@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: ${project.artifactId}
+  pid:
+    file: ${project.artifactId}.pid
+  http:
+    encoding:
+      enabled: true
+      charset: UTF-8
+      
+server:
+  context-path: /${project.artifactId}
+  port: 18008
+  compression:
+    enabled: true
+    mime-types:
+    - application/xml
+    - application/json
+
+endpoints:
+    metrics:
+        sensitive: false
+    refresh:
+        sensitive: false
+        enabled: true
+    env:
+        sensitive: false
+        enabled: true
+
+      
+app:
+  version: "@project.version@"
+
+logging:
+  level:
+    ust.laboratory: DEBUG
+    root: INFO
+
+  
