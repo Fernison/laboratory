@@ -1,9 +1,8 @@
-package ust.laboratory.sortingservice.controller;
+package ust.laboratory.sortingservice.test;
   
-
 import org.springframework.boot.SpringApplication; 
 import org.springframework.boot.autoconfigure.SpringBootApplication; 
-import org.springframework.boot.system.ApplicationPidFileWriter;  
+import org.springframework.boot.system.ApplicationPidFileWriter;
 
 @SpringBootApplication 
 public class Application {  
@@ -14,4 +13,4 @@ public class Application {
 		application.run(args);     
 	}  
 	
-} 
+}  

@@ -14,7 +14,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<description>Mergesort sorting service</description>
  	<properties>   
  		<project.build.sourceEncoding>UTF8</project.build.sourceEncoding>  
- 		<mainClass>ust.laboratory.sortingservice.main.Application</mainClass>  
+ 		<mainClass>ust.laboratory.sortingservice.Application</mainClass>  
 	</properties>  
 	<dependencies>   
 		<!-- Project dependencies -->
@@ -43,6 +43,14 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 			<groupId>com.fasterxml.jackson.core</groupId>    
 			<artifactId>jackson-annotations</artifactId>   
 		</dependency> 
+		<dependency>
+		    <groupId>io.springfox</groupId>
+		    <artifactId>springfox-swagger2</artifactId>
+		</dependency>	
+		<dependency>
+		    <groupId>io.springfox</groupId>
+		    <artifactId>springfox-swagger-ui</artifactId>
+		</dependency>	
 	</dependencies>  
 	<build>  
   		<plugins>    
@@ -84,7 +92,41 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
    						</configuration>      
    					</execution>     
    				</executions>    
-   			</plugin>    			
-   		</plugins>     
-   	</build>   
+   			</plugin>  
+   			<plugin>
+			    <groupId>org.jacoco</groupId>
+			    <artifactId>jacoco-maven-plugin</artifactId>
+			    <version>0.7.7.201606060606</version>
+			    <executions>
+			        <execution>
+			            <goals>
+			                <goal>prepare-agent</goal>
+			            </goals>
+			        </execution>
+			        <execution>
+			            <id>report</id>
+			            <phase>prepare-package</phase>
+			            <goals>
+			                <goal>report</goal>
+			            </goals>
+			        </execution>
+			    </executions>
+			</plugin>  	
+   		</plugins>       		
+   	</build> 
+   	<reporting>
+	    <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>3.7</version>
+                <configuration>
+                    <rulesets>
+                        <ruleset>/rulesets/java/braces.xml</ruleset>
+                        <ruleset>/rulesets/java/naming.xml</ruleset>
+                    </rulesets>
+                </configuration>
+            </plugin>
+        </plugins>
+	</reporting>     
 </project>

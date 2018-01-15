@@ -1,8 +1,6 @@
 package ust.laboratory.sortingservice.service.impl;
 
 import java.util.Date;
-import java.util.Random;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +15,7 @@ import ust.laboratory.sortingservice.storage.Storage;
 @Component
 public class AsyncWorker {
 
-	private static final Logger log = LoggerFactory.getLogger(AsyncWorker.class);
+	private static final Logger Log = LoggerFactory.getLogger(AsyncWorker.class);
 
 	@Autowired
 	private Sorter sorter;
@@ -26,16 +24,21 @@ public class AsyncWorker {
 	
 	@Async
 	public void startExecution(Execution execution) {
-		log.debug("startExecution {}", execution);
+		Log.debug("startExecution {}", execution);
 		// ordenar //
 		long init=System.currentTimeMillis();
 		int[] output=sorter.sort(execution.getInput());
+		if(output==null) return;
 		long end=System.currentTimeMillis();		
 		// Guardar resultado de la ordenacion //		
 		execution.setOutput(output);
 		execution.setStatus(EnumStatus.completed);
 		execution.setDuration(end-init);
 		execution.setTimestamp(new Date());
-	    storage.save(execution);
+	    try {
+			storage.save(execution);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

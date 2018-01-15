@@ -8,6 +8,8 @@ public class SortingServiceException extends Exception {
 	private int code;
 		
 	public static final int ID_NOT_FOUND=1;
+	public static final int INVALID_INPUT_DATA=2;
+	public static final int INTERNAL_ERROR=99;
 	
 	public SortingServiceException(String errMsg, int code) {
 		this.errMsg=errMsg;

@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.scheduling.annotation.EnableAsync;
 
-import ust.laboratory.sortingservice.controller.SortingServiceController;
 import ust.laboratory.sortingservice.sorter.MergesortSorter;
 import ust.laboratory.sortingservice.sorter.Sorter;
 import ust.laboratory.sortingservice.storage.MemoryStorage;
@@ -18,18 +17,19 @@ import ust.laboratory.sortingservice.storage.Storage;
 @EnableAsync
 public class SortingServiceConfiguration { 
 	
-	private static final Logger log = LoggerFactory.getLogger(SortingServiceConfiguration.class); 
+	private static final Logger Log = LoggerFactory.getLogger(SortingServiceConfiguration.class); 
 
 	@Bean
 	public Sorter getSorter() {
-		log.debug("********************************* getSorter");
+		Log.debug("********************************* getSorter");
 		return new MergesortSorter();
 	}
 	
 	@Bean
-	@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
+	@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON) // No haría falta porque por defecto el scope es Singleton
+															// Lo contrario es "Prototype" que crea una instancia por peticion	
 	public Storage getStorage() {
-		log.debug("*********************************** getStorage");
+		Log.debug("*********************************** getStorage");
 		return new MemoryStorage();
 	}
 

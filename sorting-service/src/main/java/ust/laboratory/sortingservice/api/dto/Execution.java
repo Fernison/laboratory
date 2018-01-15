@@ -9,17 +9,25 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(Include.NON_DEFAULT)
+@ApiModel(value = "Execution", description = "A sort execution")
 public class Execution implements Serializable {
 
 	transient private static final long serialVersionUID = 1134554639503238072L;
 
+	@ApiModelProperty(value = "The unique identifier of the given execution", readOnly = true, required = true)
 	private UUID id;
 	private Date timestamp;
 	private long duration;
+	@ApiModelProperty(value = "The status of the execution execution", required = true)
 	private EnumStatus status;
+	@ApiModelProperty(value = "The array to sort")
 	private int[] input;
+	@ApiModelProperty(value = "The sorted array")
 	private int[] output;
 	
 	public UUID getId() {

@@ -11,30 +11,34 @@ import ust.laboratory.sortingservice.api.dto.Execution;
 
 public final class MemoryStorage extends Storage {
 
-	private static final Logger log = LoggerFactory.getLogger(MemoryStorage.class);
+	private static final Logger Log = LoggerFactory.getLogger(MemoryStorage.class);
 
 	private HashMap<UUID, Execution> storage=new HashMap<UUID, Execution>();
 	
 	public MemoryStorage() {
-		super();
-	}
-
-	@Override
-	public void save(Execution execution) {
-		storage.put(execution.getId(), execution);
-		log.debug("Storage {}",storage.size());
+		super("MEMORY-"+UUID.randomUUID(), Storage.MEMORY);
 	}
 	
 	@Override
-	public Execution getByUid(UUID uuid) {
+	public void save(Execution execution) throws Exception {
+		storage.put(execution.getId(), execution);
+		Log.debug("Storage name {}", getName());
+	}
+	
+	@Override
+	public Execution getByUid(UUID uuid) throws Exception {
 		return storage.get(uuid);
 	}
 	
 	@Override
-	public List<Execution> getAll() {
+	public List<Execution> getAll() throws Exception {
 		List<Execution> list = storage.values().stream().collect(Collectors.toList());
 		return list;
 	}
 	
+	@Override
+	public void clear() throws Exception {
+		storage.clear();
+	}
 	
 }
