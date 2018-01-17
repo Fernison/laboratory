@@ -40,6 +40,7 @@ public class SortServiceImpl implements ISortService {
 		try {
 			storage.save(executionToSort);
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new SortingServiceException(e.getMessage(), SortingServiceException.INTERNAL_ERROR);
 		}
 		worker.startExecution(executionToSort);		
@@ -47,15 +48,16 @@ public class SortServiceImpl implements ISortService {
 	}
 	
 	public Execution getExecution(UUID id) throws SortingServiceException {
+		Execution exec=null;
 		try {
-			Execution exec=storage.getByUid(id);
-			if(exec==null) {
-				throw new SortingServiceException("ID: "+id+ " not found", SortingServiceException.ID_NOT_FOUND);
-			}
-			return exec;
+			exec=storage.getByUid(id);
 		} catch (Exception e) {
 			throw new SortingServiceException(e.getMessage(), SortingServiceException.INTERNAL_ERROR);
-		}		
+		}
+		if(exec==null) {
+			throw new SortingServiceException("ID: "+id+ " not found", SortingServiceException.ID_NOT_FOUND);
+		}
+		return exec;
 	}
 	
 	public List<Execution> getExecutions() throws SortingServiceException {

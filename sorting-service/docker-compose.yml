@@ -1,0 +1,49 @@
+version: '2.0'
+
+#####################################################################
+# Services
+
+services:
+
+ ######################################    
+ # Infraestructura
+
+ ##Messaging, DB, Logs, Conf, etc. 
+
+  redis:     
+    image: redis:alpine     
+    volumes:
+      - ./data/redis:/data     
+    networks:       
+      service:         
+        aliases:           
+          - ust-lab-redis
+                    
+  ######################################
+  # Microservices 
+  sort-service:      
+    build: .
+    image: sort-service
+    environment:
+      - SERVICE_NAME=sort-service
+      - SERVER_PORT=8080
+      - REDIS_HOST=ust-lab-redis # Redis Docker container name + network
+      - REDIS_PORT=6379
+      - JAVA_OPTS=-server -Xms512M -Xmx1024M -Xmn256m -Xss2m -Dfile.encoding=UTF-8
+      - TZ=Europe/Madrid
+    ports:
+      - 18008:8080
+    depends_on:
+      - redis
+    networks:
+      service:
+        aliases:
+          - sort-service
+          - "{{.ID}}"
+
+#####################################################################
+# Networks
+
+networks:
+  service:
+    

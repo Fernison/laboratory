@@ -1,6 +1,6 @@
 server:
   context-path: /${project.artifactId}
-  port: ${SERVER_PORT}
+  port: 18008
   compression:
     enabled: true
     mime-types:
@@ -17,8 +17,8 @@ spring:
       enabled: true
       charset: UTF-8
   redis:
-    host: ${REDIS_HOST}
-    port: ${REDIS_PORT}
+    host: localhost
+    port: 6739
       
 app:
   version: "@project.version@"
