@@ -19,8 +19,6 @@ spring:
       
 app:
   version: "@project.version@"
-  service2_name: srv1-srv2
-  service2_url: http://srv1-srv2:9090
 
 logging:
   level:

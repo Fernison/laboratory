@@ -22,7 +22,7 @@ public class KubernetesServiceController {
     
 	@GetMapping(path = "/{name}")
 	public ResponseEntity<String> echo(@PathVariable("name") String name) {
-    	log.info("Request {}", name);  
+    	log.info("Request ESCENARIO 2 {}", name);  
 		return ResponseEntity.ok(service.sayEcho(name));
 	}	
 	
