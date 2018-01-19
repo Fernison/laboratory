@@ -1,0 +1,33 @@
+server:
+  context-path: /${project.artifactId}
+  port: 18008
+  compression:
+    enabled: true
+    mime-types:
+    - application/xml
+    - application/json
+    
+spring:
+  application:
+    name: ${project.artifactId}
+  pid:
+    file: ${project.artifactId}.pid
+  http:
+    encoding:
+      enabled: true
+      charset: UTF-8
+  redis:
+    host: localhost
+    port: 6739
+      
+app:
+  version: "@project.version@"
+  sorter: mergersoft
+  storage: memory
+
+logging:
+  level:
+    ust.laboratory: DEBUG
+    root: INFO
+
+  
