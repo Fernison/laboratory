@@ -22,7 +22,11 @@ public class KubernetesServiceController {
     
 	@GetMapping(path = "/{name}")
 	public ResponseEntity<String> echo(@PathVariable("name") String name) {
-    	log.info("Request ESCENARIO 2 {}", name);  
+    	log.info("Request ESCENARIO 3 con configuracion en application.yml {}", name);  
+    	log.info("Value SERVICE {}", System.getenv("SERVICE"));
+    	log.info("Value SERVICE {}", System.getProperty("SERVICE"));
+    	log.info("Value URL {}", System.getenv("URL"));
+    	log.info("Value URL {}", System.getProperty("URL"));
 		return ResponseEntity.ok(service.sayEcho(name));
 	}	
 	

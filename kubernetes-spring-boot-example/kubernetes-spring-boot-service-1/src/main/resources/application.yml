@@ -19,6 +19,8 @@ spring:
       
 app:
   version: "@project.version@"
+  service2_name: ${SERVICE}
+  service2_url: ${URL}
 
 logging:
   level:
