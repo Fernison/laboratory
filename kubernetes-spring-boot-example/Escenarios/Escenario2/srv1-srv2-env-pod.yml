@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: srv1-srv2
+  labels:
+   app: srv1-srv2
+spec:
+  containers:
+  - image: fernison/service1
+    name: service1
+    ports:
+    - name: service1-port
+      containerPort: 8080 
+    env:
+     - name: SERVICE
+       valueFrom:
+        configMapKeyRef:
+         name: myapp-config
+         key: myconfig.service2_name
+     - name: URL
+       valueFrom:
+        configMapKeyRef:
+         name: myapp-config
+         key: myconfig.service2_url
+  - image: fernison/service2
+    name: service2
+    ports:
+    - name: service2-port
+      containerPort: 9090 

@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: gateway-ingress
+spec:
+  backend:
+    serviceName: default-http-backend
+    servicePort: 80
+  rules:
+  - host: test.host
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: service2-service
+          servicePort: 9090

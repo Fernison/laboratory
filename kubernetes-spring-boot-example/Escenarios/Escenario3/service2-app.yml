@@ -1,0 +1,31 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: service2
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: service2
+    spec:
+      containers:
+      - image: fernison/service2
+        name: service2-container
+        ports:
+        - name: service2-port
+          containerPort: 9090
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service2-service
+spec:
+  type: NodePort
+  ports:
+  - port: 9090 
+    nodePort: 30403
+    protocol: TCP
+    name: http
+  selector:
+    app: service2

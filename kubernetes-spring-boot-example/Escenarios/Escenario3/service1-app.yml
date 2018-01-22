@@ -1,0 +1,42 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: service1
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: service1
+    spec:
+      containers:
+      - image: fernison/service1
+        name: service1-container
+        ports:
+        - name: service1-port
+          containerPort: 8080
+        env:
+        - name: SERVICE
+          valueFrom:
+           configMapKeyRef:
+            name: myapp-config
+            key: myconfig.service2_name
+        - name: URL
+          valueFrom:
+           configMapKeyRef:
+            name: myapp-config
+            key: myconfig.service2_url
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service1-service
+spec:
+  type: NodePort
+  ports:
+  - port: 8080
+    nodePort: 30303
+    protocol: TCP
+    name: http
+  selector:
+    app: service1
