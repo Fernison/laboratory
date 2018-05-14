@@ -1,0 +1,165 @@
+version: '3'
+
+#####################################################################
+# Services
+
+services:
+
+ ######################################    
+ # Infraestructura
+
+ ##Messaging, DB, Logs, Conf, etc. 
+
+  # Message Broker
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
+    networks:
+      service:
+        aliases:
+          - zookeeper
+
+  kafka:
+    image: wurstmeister/kafka
+    ports:
+      - "9092:9092"
+    environment:
+      HOSTNAME_COMMAND: "getent hosts `hostname` | cut -d' ' -f1"
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+#      KAFKA_ADVERTISED_HOST_NAME: kafka  # Si los MS se ejecutan en el compose
+#      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181 # Si los MS se ejecutan en el compose
+#      KAFKA_ADVERTISED_HOST_NAME: _{HOSTNAME_COMMAND} # Ejemplo de uso de una variable       
+      KAFKA_ADVERTISED_PORT: 9092
+      KAFKA_ADVERTISED_HOST_NAME: 192.168.56.1 # Si los MS se ejecutan fuera del compose (la IP del host)
+      KAFKA_ZOOKEEPER_CONNECT: 192.168.56.1:2181 # Si los MS se ejecutan fuera del compose (la IP del host)
+      KAFKA_CREATE_TOPICS: "kafkachannel:1:1"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - zookeeper
+    networks:
+      service:
+        aliases:
+          - kafka
+          
+  flume:
+    image: flume-kafka-mysql
+    environment:
+      FLUME_AGENT_NAME: agent
+    depends_on:
+      - mysql      
+    networks:
+      service:
+        aliases:
+          - flume
+                    
+  mysql:
+    image: mysql
+    ports:
+      - "13306:3306"
+    restart: always
+    environment:
+      MYSQL_DATABASE: test
+      MYSQL_USER: saga
+      MYSQL_PASSWORD: secreta
+      MYSQL_ROOT_PASSWORD: secreta
+#      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    depends_on:
+      - kafka
+    networks:
+      service:
+        aliases:
+          - mysql
+                  
+  ######################################
+  # Microservices
+#  init-service:      
+#    build: ./saga-eventsourcing-ms-init-service/target/docker
+#    image: saga-eventsourcing-ms-init-service
+#    environment:
+#      - SERVICE_NAME=init-service
+#      - SERVER_PORT=8888
+#      - KAFKA_HOST=kafka
+#      - KAFKA_PORT=9092
+#      - KAFKA_ZOOKEEPER=zookeeper:2181   
+#      - JAVA_OPTS=-server -Xms512M -Xmx1024M -Xmn256m -Xss2m -Dfile.encoding=UTF-8
+#      - TZ=Europe/Madrid
+#    ports:
+#      - 18800:8888
+#    depends_on:
+#      - kafka
+#    networks:
+#      service:
+#        aliases:
+#          - init-service
+#          - "{{.ID}}"
+# 
+#  middle1-service:      
+#    build: ./saga-eventsourcing-ms-middle1-service/target/docker
+#    image: saga-eventsourcing-ms-middle1-service
+#    environment:
+#      - SERVICE_NAME=init-service
+#      - SERVER_PORT=9999
+#      - KAFKA_HOST=kafka
+#      - KAFKA_PORT=9092
+#      - KAFKA_ZOOKEEPER=zookeeper:2181   
+#      - JAVA_OPTS=-server -Xms512M -Xmx1024M -Xmn256m -Xss2m -Dfile.encoding=UTF-8
+#      - TZ=Europe/Madrid
+#    ports:
+#      - 19900:9999
+#    depends_on:
+#      - init-service
+#    networks:
+#      service:
+#        aliases:
+#          - middle1-service
+#          - "{{.ID}}"
+#          
+#  middle2-service:      
+#    build: ./saga-eventsourcing-ms-middle2-service/target/docker
+#    image: saga-eventsourcing-ms-middle2-service
+#    environment:
+#      - SERVICE_NAME=init-service
+#      - SERVER_PORT=10000
+#      - KAFKA_HOST=kafka
+#      - KAFKA_PORT=9092
+#      - KAFKA_ZOOKEEPER=zookeeper:2181   
+#      - JAVA_OPTS=-server -Xms512M -Xmx1024M -Xmn256m -Xss2m -Dfile.encoding=UTF-8
+#      - TZ=Europe/Madrid
+#    ports:
+#      - 20000:10000
+#    depends_on:
+#      - middle1-service
+#    networks:
+#      service:
+#        aliases:
+#          - middle1-service
+#          - "{{.ID}}"
+
+#  final-service:      
+#    build: ./saga-eventsourcing-ms-final-service/target/docker
+#    image: saga-eventsourcing-ms-final-service
+#    environment:
+#      - SERVICE_NAME=init-service
+#      - SERVER_PORT=11000
+#      - KAFKA_HOST=kafka
+#      - KAFKA_PORT=9092
+#      - KAFKA_ZOOKEEPER=zookeeper:2181   
+#      - JAVA_OPTS=-server -Xms512M -Xmx1024M -Xmn256m -Xss2m -Dfile.encoding=UTF-8
+#      - TZ=Europe/Madrid
+#    ports:
+#      - 21000:11000
+#    depends_on:
+#      - middle2-service
+#    networks:
+#      service:
+#        aliases:
+#          - final-service
+#          - "{{.ID}}"
+               
+#####################################################################
+# Networks
+
+networks:
+  service:

@@ -1,0 +1,3 @@
+- Lanzar una petición y comprobar correlacion de ID.
+- Lanzar una petición y comprobar los 4 estados.
+- Lanzar n peticiones y comprobar el total de msgs almacenados y los de cada estado.

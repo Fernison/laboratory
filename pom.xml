@@ -15,7 +15,7 @@
 	</properties>  
 	<dependencyManagement>  
 		<dependencies>    
-			<dependency>     
+<!-- 			<dependency>     
 				<groupId>org.springframework.boot</groupId>     
 				<artifactId>spring-boot-starter</artifactId>     
 				<version>${spring-boot.version}</version>    
@@ -30,7 +30,14 @@
 							<artifactId>spring-boot-starter-logging</artifactId>      
 						</exclusion>     
 					</exclusions>    
-			</dependency>  	 
+			</dependency>   -->	 
+			<dependency>     
+				<groupId>org.springframework.boot</groupId>     
+				<artifactId>spring-boot-starter-parent</artifactId>     
+				<version>${spring-boot.version}</version> 
+				<type>pom</type>
+				<scope>import</scope>   
+			</dependency>    
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-starter-test</artifactId>
@@ -162,5 +169,6 @@
 	<modules>
 		<module>sorting-service</module>
 		<module>kubernetes-spring-boot-example</module>
+		<module>saga-eventsourcing</module>
 	</modules>  
 </project> 

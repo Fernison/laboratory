@@ -1,0 +1,25 @@
+agent.sources=kafkaSrc
+agent.channels=channel1
+agent.sinks=jdbcSink
+
+agent.channels.channel1.type=org.apache.flume.channel.kafka.KafkaChannel
+agent.channels.channel1.brokerList=kafka:9092
+agent.channels.channel1.kafka.topic=kafkachannel
+agent.channels.channel1.zookeeperConnect=zookeeper:2181
+agent.channels.channel1.capacity=10000
+agent.channels.channel1.transactionCapacity=1000
+
+agent.sources.kafkaSrc.type = org.apache.flume.source.kafka.KafkaSource
+agent.sources.kafkaSrc.channels = channel1
+agent.sources.kafkaSrc.zookeeperConnect = zookeeper:2181
+agent.sources.kafkaSrc.topic = saga-stream
+
+agent.sinks.jdbcSink.type = com.stratio.ingestion.sink.jdbc.JDBCSink
+agent.sinks.jdbcSink.connectionString = jdbc:mysql://mysql:3306/test
+agent.sinks.jdbcSink.username=root
+agent.sinks.jdbcSink.password=
+agent.sinks.jdbcSink.batchSize = 10
+agent.sinks.jdbcSink.channel =channel1
+agent.sinks.jdbcSink.sqlDialect=MYSQL
+agent.sinks.jdbcSink.driver=com.mysql.jdbc.Driver
+agent.sinks.jdbcSink.sql=INSERT INTO kafkamsg(msg) VALUES(${body:varchar})

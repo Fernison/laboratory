@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: SagaEventSourcingTest
+  http:
+    encoding:
+      enabled: true
+      charset: UTF-8
+        
+logging:
+  level:
+    com.ust.sagaeventsourcing: INFO
+    org.springframework: INFO
+    root: INFO

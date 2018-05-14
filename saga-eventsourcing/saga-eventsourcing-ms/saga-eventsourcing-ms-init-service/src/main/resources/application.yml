@@ -1,0 +1,38 @@
+server:
+  context-path: /${project.artifactId}
+  port: ${SERVER_PORT:18800}
+  compression:
+    enabled: true
+    mime-types:
+    - application/xml
+    - application/json
+
+spring:
+  application:
+    name: ${project.artifactId}
+  pid:
+    file: ${project.artifactId}.pid
+  http:
+    encoding:
+      enabled: true
+      charset: UTF-8
+  cloud:
+    stream:
+      kafka:
+        binder:         
+          brokers:
+          - ${KAFKA_HOST:localhost}:${KAFKA_PORT:9092} #192.168.56.1
+          zk-nodes:
+          - ${KAFKA_ZOOKEEPER:localhost:2181} #192.168.56.1
+      bindings:      
+        write-stream:
+          destination: saga-stream          
+          content-type: application/json
+        read-stream:
+          destination: saga-stream          
+          content-type: application/json
+          
+logging:
+  level:
+    tcp.microservices: DEBUG
+    root: INFO

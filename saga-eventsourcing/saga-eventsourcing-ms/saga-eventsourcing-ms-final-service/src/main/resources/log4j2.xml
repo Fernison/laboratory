@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE xml> 
+<configuration monitorInterval="30" status="INFO" strict="true">  
+	<Appenders>   
+		<Console name="CONSOLE" target="SYSTEM_OUT">    
+			<PatternLayout pattern="%d{yyyy/MM/dd HH:mm:ss.SSS} %-5p [%25c{1.}] 
+				[TraceId]:%X{X-B3-TraceId}|%X{TRACKING}|%m%n" /> 
+		</Console>   
+		<Async name="CONSOLE_ASYNC" includeLocation="true">    
+			<AppenderRef ref="CONSOLE" />   
+		</Async>  
+	</Appenders>  
+	<Loggers>   
+		<Logger name="org.springframework" level="WARN" />   
+		<Root level="INFO">    
+			<AppenderRef ref="CONSOLE_ASYNC" />   
+		</Root>  
+	</Loggers> 
+</configuration> 

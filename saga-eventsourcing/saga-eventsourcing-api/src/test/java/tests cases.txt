@@ -1,0 +1,7 @@
+- Iniciar una saga
+- Recibir un evento a responder
+- Recibir un evento a no responder
+	- Por saga
+	- Por nombre de evento
+	- Por estado (TODO)
+	
