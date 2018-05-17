@@ -1,0 +1,56 @@
+server:
+  context-path: /${project.artifactId}
+  port: ${SERVER_PORT}
+#  port: 11112 #${SERVER_PORT}
+  compression:
+    enabled: true
+    mime-types:
+    - application/xml
+    - application/json
+
+endpoints:
+    metrics:
+        sensitive: false
+    refresh:
+        sensitive: false
+        enabled: true
+    env:
+        sensitive: false
+        enabled: true
+        
+management:
+  context-path: /admin
+  port: ${MANAGEMENT_PORT}
+  address: ${MANAGEMENT_ADDRESS:0.0.0.0}
+#  port: 22223 #${MANAGEMENT_PORT}
+#  address: 0.0.0.0 #${MANAGEMENT_ADDRESS:0.0.0.0}
+  info.git:
+    enabled: true
+    mode: full
+  
+spring:
+  application:
+    name: ${project.artifactId}
+  pid:  
+    file: ${project.artifactId}.pid
+  http:
+    encoding:
+      enabled: true
+      charset: UTF-8  
+  rabbitmq:
+    host: ${RABBITMQ_HOST}
+    port: ${RABBITMQ_PORT}
+    username: ${RABBITMQ_USER}
+    password: ${RABBITMQ_PWD}
+#    host: localhost
+#    port: 5672    
+      
+app:
+  version: "@project.version@"
+
+logging:
+  level:
+    tcp.microservices: DEBUG
+    root: INFO
+
+  

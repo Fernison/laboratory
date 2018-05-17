@@ -1,0 +1,40 @@
+server:
+  context-path: /${project.artifactId}
+  port: 22222 #${SERVER_PORT}
+  compression:
+    enabled: true
+    mime-types:
+    - application/xml
+    - application/json
+
+#endpoints:
+#    metrics:
+#        sensitive: false
+#        
+#management:
+#  context-path: /admin
+#  port: ${MANAGEMENT_PORT}
+#  address: ${MANAGEMENT_ADDRESS:0.0.0.0}
+#  info.git:
+#    enabled: true
+#    mode: full
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:18761/eureka/ # Si no se pone esta linea lo busca en localhost:8761 
+  instance:
+    lease-renewal-interval-in-seconds: 5 
+
+app:
+  service2:
+    # Usado para resolver por Eureka
+    feign_name: server2
+    # Usando la URl directamente
+    host: http://localhost:44444
+    url: /tcp-microservices-netflix-service2/test2
+          
+logging:
+  level:
+    tcp.microservices: DEBUG
+    root: INFO

@@ -1,0 +1,8 @@
+# Logfile created on 2017-12-26 11:56:31 +0000 by logger.rb/56438
+[2017-12-26T11:56:34+00:00] INFO: Started chef-zero at chefzero://localhost:8889 with repository at /opt/gitlab/embedded
+  One version per cookbook
+
+[2017-12-26T11:56:34+00:00] INFO: Forking chef instance to converge...
+[2017-12-26T11:56:34+00:00] INFO: *** Chef 12.12.15 ***
+[2017-12-26T11:56:34+00:00] INFO: Platform: x86_64-linux
+[2017-12-26T11:56:34+00:00] INFO: Chef-client pid: 30

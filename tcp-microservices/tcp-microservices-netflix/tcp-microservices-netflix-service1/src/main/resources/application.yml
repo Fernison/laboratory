@@ -1,0 +1,43 @@
+server:
+  context-path: /${project.artifactId}
+  port: 55555 #${SERVER_PORT}
+  compression:
+    enabled: true
+    mime-types:
+    - application/xml
+    - application/json
+
+#endpoints:
+#    metrics:
+#        sensitive: false
+#        
+#management:
+#  context-path: /admin
+#  port: ${MANAGEMENT_PORT}
+#  address: ${MANAGEMENT_ADDRESS:0.0.0.0}
+#  info.git:
+#    enabled: true
+#    mode: full
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:18761/eureka/ # Si no se pone esta linea lo busca en localhost:8761 
+  instance:
+    lease-renewal-interval-in-seconds: 5 
+
+hystrix:
+  command:
+    sendNotification:
+      execution.isolation.thread.timeoutInMilliseconds: 100
+      circuitBreaker.requestVolumeThreshold: 1
+      circuitBreaker.sleepWindowInMilliseconds: 600
+          
+app:
+  service2:
+    url: http://server2:44444/tcp-microservices-netflix-service2/test
+    
+logging:
+  level:
+    tcp.microservices: DEBUG
+    root: INFO

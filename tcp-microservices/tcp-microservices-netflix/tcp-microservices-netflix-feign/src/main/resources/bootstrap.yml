@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: feign_client #${project.artifactId}
+  pid:
+    file: ${project.artifactId}.pid
+  http:
+    encoding:
+      enabled: true
+      charset: UTF-8

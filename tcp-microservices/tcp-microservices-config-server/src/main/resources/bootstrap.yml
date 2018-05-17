@@ -1,0 +1,48 @@
+server:
+#  port: 8888 #${SERVER_PORT}
+  port: ${SERVER_PORT}
+
+endpoints:
+    metrics:
+        sensitive: false
+    refresh:
+        sensitive: false
+        enabled: true
+    env:
+        sensitive: false
+        enabled: true
+        
+management:
+  context-path: /admin
+#  port: 44444 #${MANAGEMENT_PORT}
+#  address: 0.0.0.0 #${MANAGEMENT_ADDRESS:0.0.0.0}
+  port: ${MANAGEMENT_PORT}
+  address: ${MANAGEMENT_ADDRESS:0.0.0.0}
+  info.git:
+    enabled: true
+    mode: full
+    
+logging:
+  level:
+    org.springframework.cloud: DEBUG
+    tcp.microservices: DEBUG
+    
+spring:
+  application:
+    name: springcloudserver
+  profiles:
+    active: native
+  rabbitmq:
+    host: ${RABBITMQ_HOST}
+    port: ${RABBITMQ_PORT}
+    username: ${RABBITMQ_USER}
+    password: ${RABBITMQ_PWD}
+#    host: localhost
+#    port: 5672
+  cloud:
+    config:
+      server:
+        bootstrap: true
+        native:
+#          searchLocations: ./misc/config  #/tmp
+          searchLocations: /tmp

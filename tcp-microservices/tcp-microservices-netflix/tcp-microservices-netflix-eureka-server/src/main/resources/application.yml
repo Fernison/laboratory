@@ -1,0 +1,27 @@
+server:
+  port: 18761 #${SERVER_PORT}
+
+spring:
+  application:
+    name: ${project.artifactId}
+  pid:
+    file: ${project.artifactId}.pid
+  http:
+    encoding:
+      enabled: true
+      charset: UTF-8
+  # Discovery Server Dashboard uses FreeMarker.  Don't want Thymeleaf templates
+  thymeleaf:
+    enabled: false     # Disable Thymeleaf
+    
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+
+logging:
+  level:
+    com.netflix.eureka: OFF
+    com.netflix.discovery: OFF
+    tcp.microservices: DEBUG
+    root: INFO

@@ -1,0 +1,52 @@
+2017-12-26_11:50:31.19893 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+2017-12-26_11:50:31.19897 @         WARNING: UNPROTECTED PRIVATE KEY FILE!          @
+2017-12-26_11:50:31.19898 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+2017-12-26_11:50:31.19898 Permissions 0755 for '/etc/gitlab/ssh_host_rsa_key' are too open.
+2017-12-26_11:50:31.19898 It is required that your private key files are NOT accessible by others.
+2017-12-26_11:50:31.19898 This private key will be ignored.
+2017-12-26_11:50:31.19991 key_load_private: bad permissions
+2017-12-26_11:50:31.21115 Could not load host key: /etc/gitlab/ssh_host_rsa_key
+2017-12-26_11:50:31.21721 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+2017-12-26_11:50:31.21722 @         WARNING: UNPROTECTED PRIVATE KEY FILE!          @
+2017-12-26_11:50:31.21722 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+2017-12-26_11:50:31.21722 Permissions 0755 for '/etc/gitlab/ssh_host_ecdsa_key' are too open.
+2017-12-26_11:50:31.21722 It is required that your private key files are NOT accessible by others.
+2017-12-26_11:50:31.21723 This private key will be ignored.
+2017-12-26_11:50:31.21758 key_load_private: bad permissions
+2017-12-26_11:50:31.24328 Could not load host key: /etc/gitlab/ssh_host_ecdsa_key
+2017-12-26_11:50:31.25051 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+2017-12-26_11:50:31.25052 @         WARNING: UNPROTECTED PRIVATE KEY FILE!          @
+2017-12-26_11:50:31.25052 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+2017-12-26_11:50:31.25052 Permissions 0755 for '/etc/gitlab/ssh_host_ed25519_key' are too open.
+2017-12-26_11:50:31.25052 It is required that your private key files are NOT accessible by others.
+2017-12-26_11:50:31.25053 This private key will be ignored.
+2017-12-26_11:50:31.25072 key_load_private: bad permissions
+2017-12-26_11:50:31.25901 Could not load host key: /etc/gitlab/ssh_host_ed25519_key
+2017-12-26_11:50:31.25912 Server listening on 0.0.0.0 port 22.
+2017-12-26_11:50:31.25913 Server listening on :: port 22.
+2017-12-26_11:56:11.77258 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+2017-12-26_11:56:11.77330 @         WARNING: UNPROTECTED PRIVATE KEY FILE!          @
+2017-12-26_11:56:11.77372 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+2017-12-26_11:56:11.77444 Permissions 0755 for '/etc/gitlab/ssh_host_rsa_key' are too open.
+2017-12-26_11:56:11.77472 It is required that your private key files are NOT accessible by others.
+2017-12-26_11:56:11.77533 This private key will be ignored.
+2017-12-26_11:56:11.77596 key_load_private: bad permissions
+2017-12-26_11:56:11.79244 Could not load host key: /etc/gitlab/ssh_host_rsa_key
+2017-12-26_11:56:11.80920 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+2017-12-26_11:56:11.81018 @         WARNING: UNPROTECTED PRIVATE KEY FILE!          @
+2017-12-26_11:56:11.81160 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+2017-12-26_11:56:11.81583 Permissions 0755 for '/etc/gitlab/ssh_host_ecdsa_key' are too open.
+2017-12-26_11:56:11.81629 It is required that your private key files are NOT accessible by others.
+2017-12-26_11:56:11.82245 This private key will be ignored.
+2017-12-26_11:56:11.82372 key_load_private: bad permissions
+2017-12-26_11:56:11.85032 Could not load host key: /etc/gitlab/ssh_host_ecdsa_key
+2017-12-26_11:56:11.85659 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+2017-12-26_11:56:11.85766 @         WARNING: UNPROTECTED PRIVATE KEY FILE!          @
+2017-12-26_11:56:11.85921 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+2017-12-26_11:56:11.86073 Permissions 0755 for '/etc/gitlab/ssh_host_ed25519_key' are too open.
+2017-12-26_11:56:11.86253 It is required that your private key files are NOT accessible by others.
+2017-12-26_11:56:11.86447 This private key will be ignored.
+2017-12-26_11:56:11.86556 key_load_private: bad permissions
+2017-12-26_11:56:11.88134 Could not load host key: /etc/gitlab/ssh_host_ed25519_key
+2017-12-26_11:56:11.88441 Server listening on 0.0.0.0 port 22.
+2017-12-26_11:56:11.88533 Server listening on :: port 22.

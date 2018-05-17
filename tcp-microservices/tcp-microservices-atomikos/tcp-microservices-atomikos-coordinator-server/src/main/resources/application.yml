@@ -1,0 +1,26 @@
+server:
+  context-path: /
+  port: ${SERVER_PORT}
+  compression:
+    enabled: true
+    mime-types:
+    - application/xml
+    - application/json
+    
+spring:
+  application:
+    name: ${project.artifactId}
+  pid:
+    file: ${project.artifactId}.pid
+  http:
+    encoding:
+      enabled: true
+      charset: UTF-8
+      
+cxf:
+  path: /
+
+logging:
+  level:
+    tcp.microservices: DEBUG
+    root: INFO

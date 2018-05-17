@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: ${project.artifactId}    
+  pid:  
+    file: ${project.artifactId}.pid    
+  profiles:
+    active: production        
+  http:
+    encoding:
+      enabled: true
+      charset: UTF-8
+
+endpoints:
+    metrics:
+        sensitive: false
+    refresh:
+        sensitive: false
+        enabled: true
+    env:
+        sensitive: false
+        enabled: true
+    info:
+        sensitive: false
+        enabled: true
+        
+app:
+  version: "@project.version@"
+
+logging:
+  level:
+    tcp.microservices: DEBUG
+    root: INFO

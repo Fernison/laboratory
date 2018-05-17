@@ -1,0 +1,213 @@
+version: '3'
+
+#####################################################################
+# Services
+
+services:
+
+ ######################################    
+ # Infraestructura
+
+ ##Messaging, DB, Logs, Conf, etc. 
+
+  couchbase:
+    image: couchbase/server
+    ports:
+      - 8091:8091
+      - 8092:8092
+      - 8093:8093
+      - 8094:8094
+      - 11210:11210
+    networks:
+      service:
+        aliases:
+        - couchbase_serv   
+        
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    hostname: "rabbit1"
+    environment:
+      - RABBITMQ_ERLANG_COOKIE=SWQOKODSQALRPCLNMEQG
+      - RABBITMQ_DEFAULT_USER=rabbitmq
+      - RABBITMQ_DEFAULT_PASS=rabbitmq
+      - RABBITMQ_DEFAULT_VHOST=/
+    ports:
+      - 15672:15672
+      - 5672:5672
+    labels:
+      name: "rabbit1"
+    volumes:
+      - "./rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins"
+    networks:
+      service:
+        aliases:
+        - rabbitmq_serv    
+ 
+  config:
+    build: ./tcp-microservices-config-server/target/docker
+    environment:
+      - SERVER_PORT=8888
+      - PROFILE=native
+      - TZ=Europe/Madrid
+      - MANAGEMENT_PORT=8081      
+      - RABBITMQ_HOST=rabbitmq_serv
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_USER=rabbitmq
+      - RABBITMQ_PWD=rabbitmq
+    volumes:
+      - ./misc/config:/tmp
+    ports:
+      - 28888:8888
+    networks:
+      service:
+        aliases:
+        - config_serv
+
+  zipkin:
+    image: openzipkin/zipkin    
+    environment:
+#      - SELF_TRACING_ENABLED=true
+      - SELF_TRACING_SAMPLE_RATE=1.0
+    ports:       
+      - 9411:9411     
+    networks: 
+      service:         
+        aliases:         
+          - zipkin_serv  
+          
+  ######################################
+  # Microservices
+  aop-service:      
+    build: ./tcp-microservices-aop/target/docker
+    image: tcp-microservices-aop-service
+    environment:
+      - SERVICE_NAME=aop-service
+      - SERVER_PORT=8070
+      - MANAGEMENT_PORT=8071
+      - JAVA_OPTS=-server -Xms512M -Xmx1024M -Xmn256m -Xss2m -Dfile.encoding=UTF-8
+      - TZ=Europe/Madrid
+    ports:
+      - 28070:8070
+      - 28071:8071
+    networks:
+      service:
+        aliases:
+          - aop-service
+          - "{{.ID}}"
+ 
+  actuator-service:      
+    build: ./tcp-microservices-actuator/target/docker
+    image: tcp-microservices-actuator-service
+    environment:
+      - SERVICE_NAME=actuator-service
+      - SERVER_PORT=8090
+      - PROFILE=dev
+      - MANAGEMENT_PORT=8091
+      - CONFIG_URI=http://config:8888   
+      - JAVA_OPTS=-server -Xms512M -Xmx1024M -Xmn256m -Xss2m -Dfile.encoding=UTF-8
+      - TZ=Europe/Madrid
+    ports:
+      - 28090:8090
+      - 28091:8091
+    depends_on:
+      - config
+    networks:
+      service:
+        aliases:
+          - actuator-service
+          - "{{.ID}}"
+
+  config-service:      
+    build: ./tcp-microservices-config-client/target/docker
+    image: tcp-microservices-config-client-service
+    environment:
+      - SERVICE_NAME=config-service
+      - SERVER_PORT=8100
+      - PROFILE=dev
+      - MANAGEMENT_PORT=8101
+      - RABBITMQ_HOST=rabbitmq_serv
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_USER=rabbitmq
+      - RABBITMQ_PWD=rabbitmq   
+      - CONFIG_URI=http://config_serv:8888
+      - JAVA_OPTS=-server -Xms512M -Xmx1024M -Xmn256m -Xss2m -Dfile.encoding=UTF-8
+      - TZ=Europe/Madrid
+    ports:
+      - 28100:8100
+      - 28101:8101
+    depends_on:
+      - config
+    networks:
+      service:
+        aliases:
+          - actuator-service
+          - "{{.ID}}"   
+                 
+  couchbase-service:      
+    build: ./tcp-microservices-couchbase-service/target/docker
+    image: tcp-microservices-couchbase-service
+    environment:
+      - SERVICE_NAME=aop-service
+      - SERVER_PORT=8110
+      - MANAGEMENT_PORT=8111
+      - COUCHBASE_HOST=couchbase_serv
+      - JAVA_OPTS=-server -Xms512M -Xmx1024M -Xmn256m -Xss2m -Dfile.encoding=UTF-8
+      - TZ=Europe/Madrid
+    ports:
+      - 28110:8110
+      - 28111:8111
+    networks:
+      service:
+        aliases:
+          - couchbase-service
+          - "{{.ID}}"
+          
+  sleuth-service1:      
+    build: ./tcp-microservices-sleuth-service1/target/docker
+    image: tcp-microservices-sleuth-service1
+    environment:
+      - SERVICE_NAME=sleuth-service1
+      - SERVER_PORT=8120
+      - MANAGEMENT_PORT=8121
+      - ZIPKIN_URL=http://zipkin_serv:9411/
+      - SERVICE2_URL=http://sleuth-service2:8130/tcp-microservices-sleuth-service2/sleuth2
+      - JAVA_OPTS=-server -Xms512M -Xmx1024M -Xmn256m -Xss2m -Dfile.encoding=UTF-8
+      - TZ=Europe/Madrid
+    ports:
+      - 28120:8120
+      - 28121:8121
+    depends_on:
+      - zipkin
+      - sleuth-service2
+    networks:
+      service:
+        aliases:
+          - sleuth-service1
+          - "{{.ID}}"
+          
+  sleuth-service2:      
+    build: ./tcp-microservices-sleuth-service2/target/docker
+    image: tcp-microservices-sleuth-service2
+    environment:
+      - SERVICE_NAME=sleuth-service2
+      - SERVER_PORT=8130
+      - MANAGEMENT_PORT=8131
+      - ZIPKIN_URL=http://zipkin_serv:9411/
+      - JAVA_OPTS=-server -Xms512M -Xmx1024M -Xmn256m -Xss2m -Dfile.encoding=UTF-8
+      - TZ=Europe/Madrid
+    ports:
+      - 28130:8130
+      - 28131:8131
+    depends_on:
+      - zipkin
+    networks:
+      service:
+        aliases:
+          - sleuth-service2
+          - "{{.ID}}"
+
+#####################################################################
+# Networks
+
+networks:
+  service:

@@ -1,0 +1,112 @@
+version: '3'
+
+#####################################################################
+# Services
+
+services:
+
+ ######################################    
+ # Infraestructura
+
+ ##Messaging, DB, Logs, Conf, etc. 
+   
+ kafka:
+    image: spotify/kafka
+    environment:
+      - AUTO_CREATE_TOPICS=true
+      - TZ=Europe/Madrid
+    networks:
+      service:
+        aliases:
+          - kafka
+           
+ config:
+    build: ./tcp-microservices-config-server/target/docker
+    environment:
+      - SERVER_PORT=8888
+      - PROFILE=native
+      - TZ=Europe/Madrid
+      - KAFKA_HOST=kafka
+      - KAFKA_ZOOKEEPER=kafka:2181
+    volumes:
+      - ./misc/config:/tmp
+    ports:
+      - 28888:8888
+    depends_on:
+      - kafka
+    networks:
+      service:
+        aliases:
+        - config_serv
+
+ ######################################
+ # Microservices
+ aop-service:      
+    build: ./tcp-microservices-aop/target/docker
+    image: tcp-microservices-aop-service
+    environment:
+      - SERVICE_NAME=aop-service
+      - SERVER_PORT=8080
+      - MANAGEMENT_PORT=8081
+      - JAVA_OPTS=-server -Xms512M -Xmx1024M -Xmn256m -Xss2m -Dfile.encoding=UTF-8
+      - TZ=Europe/Madrid
+    ports:
+      - 28070:8070
+      - 28071:8071
+    networks:
+      service:
+        aliases:
+          - aop-service
+          - "{{.ID}}"
+ 
+ actuator-service:      
+    build: ./tcp-microservices-actuator/target/docker
+    image: tcp-microservices-actuator-service
+    environment:
+      - SERVICE_NAME=actuator-service
+      - SERVER_PORT=8080
+      - PROFILE=dev
+      - MANAGEMENT_PORT=8081
+      - CONFIG_URI=http://config:8888   
+      - JAVA_OPTS=-server -Xms512M -Xmx1024M -Xmn256m -Xss2m -Dfile.encoding=UTF-8
+      - TZ=Europe/Madrid
+    ports:
+      - 28090:8090
+      - 28091:8091
+    depends_on:
+      - config
+    networks:
+      service:
+        aliases:
+          - actuator-service
+          - "{{.ID}}"
+
+ config-service:      
+    build: ./tcp-microservices-config-client/target/docker
+    image: tcp-microservices-config-client-service
+    environment:
+      - SERVICE_NAME=config-service
+      - SERVER_PORT=8080
+      - PROFILE=dev
+      - MANAGEMENT_PORT=8081
+      - KAFKA_HOST=kafka
+      - KAFKA_ZOOKEEPER=kafka:2181
+      - CONFIG_URI=http://config_serv:8888
+      - JAVA_OPTS=-server -Xms512M -Xmx1024M -Xmn256m -Xss2m -Dfile.encoding=UTF-8
+      - TZ=Europe/Madrid
+    ports:
+      - 28100:8100
+      - 28101:8101
+    depends_on:
+      - config
+    networks:
+      service:
+        aliases:
+          - actuator-service
+          - "{{.ID}}"   
+                 
+#####################################################################
+# Networks
+
+networks:
+  service:

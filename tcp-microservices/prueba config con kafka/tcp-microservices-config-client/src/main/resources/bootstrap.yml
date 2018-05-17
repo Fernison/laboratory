@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: ${project.artifactId}
+  profiles:
+    active: dev        
+  cloud:
+    stream: 
+      kafka:
+        binder:
+          brokers:
+          - ${KAFKA_HOST:localhost}:${KAFKA_PORT:9092}
+          zk-nodes:
+          - ${KAFKA_ZOOKEEPER:localhost:2181}
+    config:  
+      uri: ${CONFIG_URI}
+      failFast: true
+      

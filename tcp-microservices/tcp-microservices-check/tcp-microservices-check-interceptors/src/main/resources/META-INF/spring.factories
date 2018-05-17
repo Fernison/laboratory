@@ -1,0 +1,1 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=tcp.microservices.check.interceptor.configuration.InterceptorAutoConfiguration

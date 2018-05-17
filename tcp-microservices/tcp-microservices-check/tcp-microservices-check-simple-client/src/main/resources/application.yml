@@ -1,0 +1,44 @@
+spring:
+  profiles: production
+server:
+  context-path: /${project.artifactId}
+  port: ${SERVER_PORT}
+  compression:
+    enabled: true
+    mime-types:
+    - application/xml
+    - application/json
+                
+management:
+  context-path: /admin
+  port: ${MANAGEMENT_PORT}
+  address: ${MANAGEMENT_ADDRESS:0.0.0.0} # Coge 0.0.0.0 por defecto si no lo encuentra
+  info.git:
+    enabled: true
+    mode: full
+  security: 
+    enabled: false
+
+---
+
+spring:
+  profiles: development
+server:
+  context-path: /${project.artifactId}
+  port: 18888
+  compression:
+    enabled: true
+    mime-types:
+    - application/xml
+    - application/json
+                
+management:
+  context-path: /admin
+  port: 28888
+  address: ${MANAGEMENT_ADDRESS:0.0.0.0}
+  info.git:
+    enabled: true
+    mode: full
+  security: 
+    enabled: false
+  

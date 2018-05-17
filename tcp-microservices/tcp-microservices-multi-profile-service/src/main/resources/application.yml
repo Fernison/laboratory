@@ -1,0 +1,51 @@
+# Arrancar proyecto indicando el perfil: 
+# mvn -pl tcp-microservices-multi-profile-service spring-boot:run -Dspring.profiles.active=profile_1
+
+spring:
+  profiles:
+    active:
+      - profile_1
+  application:
+    name: ${project.artifactId}
+  pid:
+    file: ${project.artifactId}.pid
+  http:
+    encoding:
+      enabled: true
+      charset: UTF-8
+
+logging:
+  level:
+    tcp.microservices: DEBUG
+    root: INFO
+    
+---
+
+spring:
+  profiles: profile_1
+server:
+  context-path: /${project.artifactId}
+  port: 18888 #${SERVER_PORT}
+  compression:
+    enabled: true
+    mime-types:
+    - application/xml
+    - application/json
+variable:
+  env: env_profile_1
+
+---
+
+spring:
+  profiles: profile_2
+server:
+  context-path: /${project.artifactId}
+  port: 38888 #${SERVER_PORT}
+  compression:
+    enabled: true
+    mime-types:
+    - application/xml
+    - application/json
+variable:
+  env: env_profile_2
+        

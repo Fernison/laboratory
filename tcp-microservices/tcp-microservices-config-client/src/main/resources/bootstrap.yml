@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: ${project.artifactId}
+  profiles:
+    active: dev        
+  cloud:
+    config:  
+      uri: ${CONFIG_URI}
+#      uri: http://localhost:8888 #${CONFIG_URI}
+      failFast: true
+      

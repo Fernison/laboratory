@@ -1,0 +1,62 @@
+server:
+  port: ${SERVER_PORT}
+
+management:
+  context-path: /admin
+  port: ${MANAGEMENT_PORT}
+  address: ${MANAGEMENT_ADDRESS:0.0.0.0}
+  info.git:
+    enabled: true
+    mode: full
+  security:
+    enabled: false
+    
+endpoints:
+    metrics:
+        sensitive: false
+    refresh:
+        sensitive: false
+        enabled: true
+    env:
+        sensitive: false
+        enabled: true
+         
+spring:  
+  application:
+    name: config-server  
+  cloud:
+    config:
+      enabled: false
+      server:
+        prefix: /config
+        health:
+          enabled: false
+        monitor:
+          github:
+            enabled: true
+        git:
+          uri: https://fernandocabrero@bitbucket.org/fernandocabrero/config_test.git
+          force-pull: true
+          username: fernando.cabreromartin@gmail.com
+          password: J0rg32506  
+  rabbitmq:
+    host: ${RABBITMQ_HOST}
+    port: ${RABBITMQ_PORT}
+    username: ${RABBITMQ_USER}
+    password: ${RABBITMQ_PWD}
+
+eureka:  
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URL}
+  instance:
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 2
+                    
+logging:
+  level:
+    org.springframework.cloud: DEBUG
+    tcp.microservices: DEBUG
+    root: INFO
+          
+

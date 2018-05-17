@@ -1,0 +1,24 @@
+server:
+  port: ${SERVER_PORT}
+
+spring:
+  application:
+    name: springcloudserver
+  profiles:
+    active: native
+  cloud:
+    stream:  
+      kafka:
+        binder:
+          brokers:
+          - ${KAFKA_HOST:localhost}:${KAFKA_PORT:9092}
+          zk-nodes:
+          - ${KAFKA_ZOOKEEPER:localhost:2181}
+    config:
+      server:
+        bootstrap: true
+        native:
+          searchLocations: /tmp
+
+  
+

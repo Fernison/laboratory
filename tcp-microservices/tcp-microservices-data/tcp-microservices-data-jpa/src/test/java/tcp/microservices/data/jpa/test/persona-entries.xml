@@ -1,0 +1,22 @@
+<dataset>
+    <persona id="1"
+           dni="dni_1"
+           nombre="nombre_1"
+           apellidos="apellidos_1"
+           fecha_alta="2014-12-25 11:13:28"/>
+    <persona id="2"
+           dni="dni_2"
+           nombre="nombre_2"
+           apellidos="apellidos_2"
+           fecha_alta="2015-12-25 11:13:28"/>
+    <persona id="3"
+           dni="dni_3"
+           nombre="nombre_3"
+           apellidos="apellidos_3"
+           fecha_alta="2016-12-25 11:13:28"/>
+    <persona id="4"
+           dni="dni_4"
+           nombre="nombre_4"
+           apellidos="apellidos_4"
+           fecha_alta="2017-12-25 11:13:28"/>
+</dataset>

@@ -1,0 +1,46 @@
+version: '3'
+
+#####################################################################
+# Services
+
+services:
+
+ ######################################    
+  # Infraestructura
+
+                         
+ ######################################
+  # Microservices
+
+  simple-client:      
+    build: ./tcp-microservices-check-simple-client/target/docker
+    image: tcp-microservices-check-simple-client-service
+    environment:
+      - SERVICE_NAME=simple-client
+      - SERVER_PORT=8200
+      - MANAGEMENT_PORT=8201
+      - JAVA_OPTS=-server -Xms512M -Xmx1024M -Xmn256m -Xss2m -Dfile.encoding=UTF-8
+      - TZ=Europe/Madrid
+    ports:
+      - 28200:8200
+      - 28201:8201
+    networks:
+      service:
+        aliases:
+          - simple-client
+          - "{{.ID}}"  
+                              
+#####################################################################
+# Networks
+
+networks:
+  service:
+
+#####################################################################
+# Volumes
+# Necesario para que funcione la imagen de GitLab con Hyper-V
+# Se crean así: docker volume create --name=gitlab-data
+  
+volumes: 
+  gitlab-data: 
+    external: true

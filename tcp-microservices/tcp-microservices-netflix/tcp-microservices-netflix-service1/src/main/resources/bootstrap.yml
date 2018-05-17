@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: server1 #${project.artifactId}
+  pid:
+    file: ${project.artifactId}.pid
+  http:
+    encoding:
+      enabled: true
+      charset: UTF-8

@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: ${project.artifactId}    
+  pid:  
+    file: ${project.artifactId}.pid    
+  profiles:
+    active: production        
+  http:
+    encoding:
+      enabled: true
+      charset: UTF-8
+  cloud:
+    config:  
+      discovery:
+        enabled: true
+        serviceId: custom-config-server
+      name: simple_client
+      profile: production
+      label: master      
+    
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL}
+  instance:
+    lease-renewal-interval-in-seconds: 5
