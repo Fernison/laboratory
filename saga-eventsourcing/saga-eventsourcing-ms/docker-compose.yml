@@ -20,6 +20,7 @@ services:
         aliases:
           - zookeeper
 
+  # Hay que ejecutar esto por la versionde Docker (18.03.1-ce, build 9ee9f40): export COMPOSE_CONVERT_WINDOWS_PATHS=1
   kafka:
     image: wurstmeister/kafka
     ports:
@@ -31,8 +32,8 @@ services:
 #      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181 # Si los MS se ejecutan en el compose
 #      KAFKA_ADVERTISED_HOST_NAME: _{HOSTNAME_COMMAND} # Ejemplo de uso de una variable       
       KAFKA_ADVERTISED_PORT: 9092
-      KAFKA_ADVERTISED_HOST_NAME: 192.168.56.1 # Si los MS se ejecutan fuera del compose (la IP del host)
-      KAFKA_ZOOKEEPER_CONNECT: 192.168.56.1:2181 # Si los MS se ejecutan fuera del compose (la IP del host)
+      KAFKA_ADVERTISED_HOST_NAME: 172.19.42.192 # Si los MS se ejecutan fuera del compose (la IP del host)
+      KAFKA_ZOOKEEPER_CONNECT: 172.19.42.192:2181 # Si los MS se ejecutan fuera del compose (la IP del host)
       KAFKA_CREATE_TOPICS: "kafkachannel:1:1"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -59,14 +60,16 @@ services:
     ports:
       - "13306:3306"
     restart: always
+    # Para que funcione con MySQL 8
+    command: mysqld --default-authentication-plugin=mysql_native_password
     environment:
       MYSQL_DATABASE: test
       MYSQL_USER: saga
       MYSQL_PASSWORD: secreta
       MYSQL_ROOT_PASSWORD: secreta
 #      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-    depends_on:
-      - kafka
+#    depends_on:
+#      - kafka
     networks:
       service:
         aliases:

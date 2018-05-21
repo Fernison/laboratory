@@ -13,7 +13,7 @@ RUN tar -zxvf jre-8u171-linux-x64.tar.gz
 RUN wget -c http://archive.apache.org/dist/flume/1.8.0/apache-flume-1.8.0-bin.tar.gz
 RUN tar -zxvf apache-flume-1.8.0-bin.tar.gz
 
-ADD ./additional_jars/kafka_2.10-0.10.2.1/libs /apache-flume-1.8.0-bin/lib
+ADD ./additional_jars/kafka_2.10-0.9.0.1/libs /apache-flume-1.8.0-bin/lib
 ADD ./additional_jars/flume-ingestion/stratio-sinks/stratio-jdbc-sink/target/stratio-jdbc-sink-0.8.0-SNAPSHOT.jar /apache-flume-1.8.0-bin/lib
 ADD ./additional_jars/mysql-connector-java-5.1.46/mysql-connector-java-5.1.46-bin.jar /apache-flume-1.8.0-bin/lib
 ADD ./additional_jars/jOOQ-3.10.6/jOOQ-lib/jooq-3.10.6.jar /apache-flume-1.8.0-bin/lib
