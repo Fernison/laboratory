@@ -1,0 +1,80 @@
+<?xml version="1.0"?> 
+<project  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+http://maven.apache.org/xsd/maven-4.0.0.xsd"  
+xmlns="http://maven.apache.org/POM/4.0.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">  
+	<modelVersion>4.0.0</modelVersion>  
+ 	<parent>   
+ 		<groupId>tcp-microservices</groupId>   
+ 		<artifactId>tcp-microservices</artifactId>   
+ 		<version>0.0.1-SNAPSHOT</version>  
+ 	</parent>  
+	<artifactId>tcp-microservices-tomcat-war</artifactId>  
+	<packaging>war</packaging>
+	<name>${project.artifactId}</name>  
+	<description>Microservices War service</description>
+ 	<properties>   
+ 		<project.build.sourceEncoding>UTF8</project.build.sourceEncoding>  
+ 		<mainClass>tcp.microservices.war.service.Application</mainClass>  
+	</properties>  
+	<dependencies>   
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>tcp-microservices-common-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>    
+			<groupId>org.springframework.boot</groupId>    
+			<artifactId>spring-boot-starter-log4j2</artifactId>   
+		</dependency>   
+		<dependency>    
+			<groupId>org.springframework.boot</groupId>    
+			<artifactId>spring-boot-starter-web</artifactId>   
+		</dependency>  
+		<!-- marked the embedded servlet container as provided -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <version>1.5.4.RELEASE</version>
+            <scope>provided</scope>
+        </dependency>
+		<dependency>    
+			<groupId>com.lmax</groupId>    
+			<artifactId>disruptor</artifactId>   
+		</dependency>   
+		<dependency>    
+			<groupId>com.fasterxml.jackson.core</groupId>    
+			<artifactId>jackson-core</artifactId>   
+		</dependency>   
+		<dependency>    
+			<groupId>com.fasterxml.jackson.core</groupId>    
+			<artifactId>jackson-annotations</artifactId>   
+		</dependency> 
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+		</dependency>			
+			<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>	
+	</dependencies>  
+	<build>  
+		<finalName>${artifactId}</finalName>     
+  		<plugins>    
+  			<plugin>    
+  				<!-- Package as an executable jar/war --> 
+  				<groupId>org.springframework.boot</groupId>     
+  				<artifactId>spring-boot-maven-plugin</artifactId>
+   			</plugin>     			
+   			<plugin>
+			  <artifactId>maven-war-plugin</artifactId>
+			  <version>2.6</version>
+			  <configuration>
+			    <failOnMissingWebXml>false</failOnMissingWebXml>
+			  </configuration>
+			</plugin>   			 
+   		</plugins>     
+   	</build>   
+</project>
