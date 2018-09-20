@@ -29,14 +29,15 @@ services:
       HOSTNAME_COMMAND: "getent hosts `hostname` | cut -d' ' -f1"
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
 #      KAFKA_ADVERTISED_HOST_NAME: kafka  # Si los MS se ejecutan en el compose
-#      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181 # Si los MS se ejecutan en el compose
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181 # Si los MS se ejecutan en el compose
 #      KAFKA_ADVERTISED_HOST_NAME: _{HOSTNAME_COMMAND} # Ejemplo de uso de una variable       
       KAFKA_ADVERTISED_PORT: 9092
-      KAFKA_ADVERTISED_HOST_NAME: 172.19.42.192 # Si los MS se ejecutan fuera del compose (la IP del host)
-      KAFKA_ZOOKEEPER_CONNECT: 172.19.42.192:2181 # Si los MS se ejecutan fuera del compose (la IP del host)
+      KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1 # Si los MS se ejecutan fuera del compose (la IP del host)
+#      KAFKA_ADVERTISED_HOST_NAME: 172.19.42.192 # Si los MS se ejecutan fuera del compose (la IP del host)
+#      KAFKA_ZOOKEEPER_CONNECT: 172.19.42.192:2181 # Si los MS se ejecutan fuera del compose (la IP del host)
       KAFKA_CREATE_TOPICS: "kafkachannel:1:1"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+#    volumes:
+#      - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
       - zookeeper
     networks:

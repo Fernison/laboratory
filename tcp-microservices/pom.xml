@@ -264,6 +264,7 @@
 		<module>tcp-microservices-atomikos</module>		
 		<module>tcp-microservices-multi-profile-service</module>
 		<module>tcp-microservices-netflix</module>
-		<module>tcp-microservices-aws-lambda-service</module>		
+		<module>tcp-microservices-aws-lambda-service</module>
+		<module>tcp-microservices-tomcat-war</module>
 	</modules>  
 </project> 

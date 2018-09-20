@@ -15,22 +15,6 @@
 	</properties>  
 	<dependencyManagement>  
 		<dependencies>    
-<!-- 			<dependency>     
-				<groupId>org.springframework.boot</groupId>     
-				<artifactId>spring-boot-starter</artifactId>     
-				<version>${spring-boot.version}</version>    
-			</dependency>    
-			<dependency>     
-				<groupId>org.springframework.boot</groupId>     
-				<artifactId>spring-boot-starter-web</artifactId>     
-				<version>${spring-boot.version}</version>     
-					<exclusions>      
-						<exclusion>       
-							<groupId>org.springframework.boot</groupId>       
-							<artifactId>spring-boot-starter-logging</artifactId>      
-						</exclusion>     
-					</exclusions>    
-			</dependency>   -->	 
 			<dependency>     
 				<groupId>org.springframework.boot</groupId>     
 				<artifactId>spring-boot-starter-parent</artifactId>     
@@ -170,5 +154,6 @@
 		<module>sorting-service</module>
 		<module>kubernetes-spring-boot-example</module>
 		<module>saga-eventsourcing</module>
+		<module>spark-java</module>
 	</modules>  
 </project> 
