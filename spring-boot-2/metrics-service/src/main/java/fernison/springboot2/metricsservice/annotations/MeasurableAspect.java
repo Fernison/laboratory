@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import fernison.springboot2.metricsservice.service.IMetricsService;
 
 @Aspect
+//@Component // Si no se pone esta anotacion no se descubre con un @ComponentScan, necesario para los tests //
+			 // PROBLEMA. Si se pone, se registra por duplicado y se llama al aspecto dos veces //
 public class MeasurableAspect {
 
 	private static final Logger LOG = LoggerFactory.getLogger(MeasurableAspect.class); 
@@ -26,18 +28,18 @@ public class MeasurableAspect {
 		LOG.info("Processing MeasurableAspect. Measurable: "+measurable);		
 		// Si NO queremos esperar a saber la respuesta //
 		// No captura la excepción aunque se produzca. No sabemos en este punto si ha habido algún error llamando al servicio //
-		try {
-			service.writeMeasure(joinPoint.getArgs(), measurable);
-		} catch (Exception e) {
-			LOG.error(e.getMessage());
-		}
-		// Si queremos esperar a saber la respuesta //
 //		try {
-//			CompletableFuture<String> result=service.writeMeasure(joinPoint.getArgs(), measurable);
-//			LOG.info("Write metric result: "+result.join());
-//		} catch (CompletionException e) {
-//			LOG.error("Error: "+e.getCause());
-//		}		
+//			service.writeMeasure(joinPoint.getArgs(), measurable);
+//		} catch (Exception e) {
+//			LOG.error(e.getMessage());
+//		}
+		// Si queremos esperar a saber la respuesta //
+		try {
+			CompletableFuture<String> result=service.writeMeasure(joinPoint.getArgs(), measurable);
+			LOG.info("Write metric result: "+result.join());
+		} catch (CompletionException e) {
+			LOG.error("Error: "+e.getCause());
+		}		
 	}
 	
 }

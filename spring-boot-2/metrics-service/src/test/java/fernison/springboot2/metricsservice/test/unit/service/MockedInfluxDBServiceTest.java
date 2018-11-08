@@ -1,4 +1,4 @@
-package fernison.springboot2.metricsservice.unit.service;
+package fernison.springboot2.metricsservice.test.unit.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;

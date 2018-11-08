@@ -1,4 +1,4 @@
-version: '2.0'
+version: '3.3'
 
 #####################################################################
 # Services
@@ -10,36 +10,75 @@ services:
 
  ##Messaging, DB, Logs, Conf, etc. 
 
-  redis:     
-    image: redis:alpine     
+  influxdb:
+    image: influxdb:latest
+    container_name: influxdb
+    ports:
+      - "8083:8083"
+      - "8086:8086"
+      - "8090:8090"
+    environment: 
+      - INFLUXDB_DATA_ENGINE=tsm1
+      - INFLUXDB_REPORTING_DISABLED=false
     volumes:
-      - ./data/redis:/data     
+      # Data persistency
+      - influxdb:/var/lib/influxd
     networks:       
       service:         
         aliases:           
-          - ust-lab-redis
+          - lab-influxb
+          
+# Es un colector de datos que lo vuelca en influx
+#  telegraf:
+#    image: telegraf:latest
+#    container_name: telegraf
+#    links:
+#      - influxdb
+#    volumes:
+#      - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
+  
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_INSTALL_PLUGINS=grafana-clock-panel,briangann-gauge-panel,natel-plotly-panel,grafana-simple-json-datasource      
+    depends_on:
+      - influxdb
+    volumes:
+      # Data persistency
+      - grafana:/var/lib/grafana
                     
   ######################################
   # Microservices 
-  sort-service:      
-    build: .
-    image: sort-service
+  metrics-service:      
+    build: ./target/docker
+    image: metrics-service
+    container_name: metrics-service
     environment:
-      - SERVICE_NAME=sort-service
+      - SERVICE_NAME=metrics-service
       - SERVER_PORT=8080
-      - REDIS_HOST=ust-lab-redis # Redis Docker container name + network
-      - REDIS_PORT=6379
+      - INFLUXDB_URL=http://lab-influxb:8086
+      - INFLUXDB_DATABASE=My_Database
       - JAVA_OPTS=-server -Xms512M -Xmx1024M -Xmn256m -Xss2m -Dfile.encoding=UTF-8
       - TZ=Europe/Madrid
     ports:
-      - 18008:8080
+      - 18080:8080
     depends_on:
-      - redis
+      - influxdb
     networks:
       service:
         aliases:
-          - sort-service
+          - metrics-service
           - "{{.ID}}"
+
+#####################################################################
+# Volumes
+
+volumes:
+  grafana:
+  influxdb:
 
 #####################################################################
 # Networks

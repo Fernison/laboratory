@@ -14,7 +14,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<description>InfluxDB metrics service</description>
  	<properties>   
  		<project.build.sourceEncoding>UTF8</project.build.sourceEncoding>  
- 		<mainClass>ust.laboratory.metricsservice.Application</mainClass>  
+ 		<mainClass>fernison.springboot2.metricsservice.Application</mainClass>  
 	</properties>  
 	<dependencies>   
 		<!-- Project dependencies -->
@@ -26,6 +26,10 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 			<groupId>org.springframework.boot</groupId>    
 			<artifactId>spring-boot-starter-web</artifactId>   
 		</dependency>  
+		<dependency>     
+			<groupId>org.springframework.boot</groupId>     
+			<artifactId>spring-boot-starter-security</artifactId>     
+		</dependency> 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>

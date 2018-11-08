@@ -47,6 +47,22 @@ public class MetricsServiceImpl implements IMetricsService {
 				metricData.getFields().put(field, value);
 			} 
 		});
+		String[] operations=measurable.operations();
+		LOG.info("Operation: "+operations.length);
+		Arrays.asList(operations).forEach(operation -> {
+			String[] parts=operation.split("=");
+			Expression exp = parser.parseExpression(parts[1]);
+			if(exp.getValueType(args[0]).equals(String.class)) {
+				String value = (String) exp.getValue(args[0]);				
+				LOG.info("String Value: "+value);	
+				// TODO: Sí que envía cadenas. Hay que cambiarlo para que se pueda enviar este valor //
+					
+			} else if(exp.getValueType(args[0]).equals(Integer.class)) {
+				Integer value = (Integer) exp.getValue(args[0]);				
+				LOG.info("Integer Value: "+value);							
+				metricData.getFields().put(parts[0], value);
+			} 
+		});
 		return service.writeMeasure(metricData);
 	}
 

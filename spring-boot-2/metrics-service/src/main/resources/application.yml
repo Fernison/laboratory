@@ -16,16 +16,17 @@ spring:
   http:
     encoding:
       enabled: true
-      charset: UTF-8
-      
+      charset: UTF-8      
+          
 app:
   version: "@project.version@"
   influxdb:
-    database: My_Database
+    url: ${INFLUXDB_URL:http://localhost:8086}
+    database: ${INFLUXDB_DATABASE:My_Database}
 
 logging:
   level:
-    fernison.springboot2: DEBUG
+    fernison.springboot2.metricsservice: DEBUG
     root: INFO
 
   

@@ -16,7 +16,8 @@ import java.lang.annotation.Target;
 public @interface Measurable {
 
 	public String measurement();
-	public String tag();
-	public String[] fields();
+	public String tag() default ""; 
+	public String[] fields() default {};
+	public String[] operations() default {};
 	
 }

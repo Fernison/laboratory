@@ -1,4 +1,4 @@
-package fernison.springboot2.metricsservice.unit.service;
+package fernison.springboot2.metricsservice.test.unit.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -19,12 +19,13 @@ import fernison.springboot2.metricsservice.service.MetricData;
 import fernison.springboot2.metricsservice.service.impl.InfluxDBServiceImpl;
 
 @RunWith(SpringRunner.class)
-@TestPropertySource(properties={"app.influxdb.database=My_Database"}) // Inyectamos una propiedad configurable
+@TestPropertySource(properties={"app.influxdb.url=http://localhost:8086", "app.influxdb.database=My_Database"}) // Inyectamos una propiedad configurable
 public class InfluxDBServiceTest {
 
 	private static final String OK="OK";
 	
-    @TestConfiguration
+	// Con esto evitamos el error "No qualifying bean of type 'org.springframework.boot.web.client.RestTemplateBuilder' available" //
+	@TestConfiguration
     static class InfluxDBServiceImplTestContextConfiguration {        
     	@Bean
         public IInfluxDBService influxDBService() {
